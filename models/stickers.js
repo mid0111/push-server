@@ -14,6 +14,9 @@ module.exports = function(sequelize, DataTypes) {
         // associations can be defined here
       }
     }
+  }, {
+    freezeTableName: true,
+    tableName: 'Sticker'
   });
   return Sticker;
 };
