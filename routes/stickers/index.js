@@ -23,13 +23,13 @@ router.post('/register', (req, res) => {
     auth: req.body.auth
   })
     .then((result) => {
-      res.send(201).json({
+      res.status(201).json({
         result: result.get()
       });
     })
     .catch((err) => {
       console.error('Failed to regist endpoint.', err);
-      res.send(500).json({
+      res.status(500).json({
         message: err.message
       });
     });
@@ -38,7 +38,7 @@ router.post('/register', (req, res) => {
 router.post('/sendNotification', (req, res) => {
 
   if(req.headers.authorization !== `Bearer ${process.env.TOKEN}`) {
-    res.send(401);
+    res.sendStatus(401);
     return;
   }
 
@@ -63,7 +63,7 @@ router.post('/sendNotification', (req, res) => {
     .then(() => res.sendStatus(201))
     .catch((err) => {
       console.error(`Failed to send notification.`, err);
-      res.send(500).json({
+      res.status(500).json({
         message: err.message
       });
     });
