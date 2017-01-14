@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var Sticker = sequelize.define('Sticker', {
+  var Sticker = sequelize.define('Stickers', {
     id: {
       allowNull: false,
       primaryKey: true,
@@ -14,9 +14,6 @@ module.exports = function(sequelize, DataTypes) {
         // associations can be defined here
       }
     }
-  }, {
-    freezeTableName: true,
-    tableName: 'Sticker'
   });
   return Sticker;
 };
