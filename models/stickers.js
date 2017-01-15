@@ -15,5 +15,15 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  Sticker.updateDate = function(id) {
+    var query = {
+      where: {
+        id: id
+      }
+    };
+    return Sticker.update({}, query);
+  };
+
   return Sticker;
 };

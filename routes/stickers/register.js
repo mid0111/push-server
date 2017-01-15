@@ -14,21 +14,37 @@ router.use((req, res, next) => {
 });
 
 router.post('/', (req, res) => {
-  Sticker.create({
-    id: req.body.endpoint,
-    key: req.body.key,
-    auth: req.body.auth
-  })
+  var id = req.body.endpoint;
+  Sticker.findById(id)
+    .then((result) => {
+      if(result) {
+        return Sticker.updateDate(id)
+          .then(() => {
+            // The device already be registered.
+            var err = new Error('Already registered.');
+            err.statusCode = 200;
+            throw err;
+          });
+      }
+    })
+    .then(() => Sticker.create({
+      id: id,
+      key: req.body.key,
+      auth: req.body.auth
+    }))
     .then((result) => {
       res.status(201).json({
         result: result.get()
       });
     })
     .catch((err) => {
-      console.error('Failed to regist endpoint.', err);
-      res.status(500).json({
-        message: err.message
-      });
+      if(err.statusCode && err.statusCode >= 400) {
+        console.error('Failed to regist endpoint.', err);
+      }
+      res.status(err.statusCode || 500)
+        .json({
+          message: err.message
+        });
     });
 });
 
