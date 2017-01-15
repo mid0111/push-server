@@ -12,10 +12,11 @@ push-server
 ```bash
 TOKEN=xxxxx
 
-curl -k "https://mid0111-push.herokuapp.com/stickers/sendNotification" \
+curl -k -i "https://mid0111-push.herokuapp.com/stickers/sendNotification" \
     -XPOST \
-    -H "Authorization: Bearer ${TOKEN}" -i
+    -H "Authorization: Bearer ${TOKEN}" \
+    -H "Content-type: application/json" \
     -d '{
-        "message": "push message"
+        "message": "test push message"
     }'
 ```
